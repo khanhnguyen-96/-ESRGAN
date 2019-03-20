@@ -1,5 +1,5 @@
 {
-  "name": "debug_002_RRDB_ESRGAN_x4_DIV2K" //  please remove "debug_" during training
+  "name": "RRDB_ESRGAN_x4_celeba_val_1000" //  please remove "debug_" during training
   ,
   "use_tb_logger": true,
   "model": "srragan",
@@ -22,15 +22,15 @@
       "use_rot": true
     },
     "val": {
-      "name": "val_set14_part",
+      "name": "helen_val_50",
       "mode": "LRHR",
       "dataroot_HR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/helen_val_50_LR_8x.lmdb",
       "dataroot_LR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/helen_val_50_HR.lmdb"
     }
   },
   "path": {
-    "root": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/-ESRGAN"
-    // , "resume_state": "../experiments/debug_002_RRDB_ESRGAN_x4_DIV2K/training_state/16.state"
+    "root": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/-ESRGAN",
+    "resume_state": "experiments/RRDB_ESRGAN_x4_celeba_val_1000/training_state/1.state"
     ,
     "pretrain_model_G": null
   },
