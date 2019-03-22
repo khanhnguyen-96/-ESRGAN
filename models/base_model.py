@@ -3,11 +3,11 @@ import torch
 import torch.nn as nn
 
 
-class BaseModel():
+class BaseModel:
     def __init__(self, opt):
         self.opt = opt
-        self.device = torch.device('cuda' if opt['gpu_ids'] is not None else 'cpu')
-        self.is_train = opt['is_train']
+        self.device = torch.device("cuda" if opt["gpu_ids"] is not None else "cpu")
+        self.is_train = opt["is_train"]
         self.schedulers = []
         self.optimizers = []
 
@@ -40,7 +40,7 @@ class BaseModel():
         return self.schedulers[0].get_lr()[0]
 
     def get_network_description(self, network):
-        '''Get the string and total parameters of the network'''
+        """Get the string and total parameters of the network"""
         if isinstance(network, nn.DataParallel):
             network = network.module
         s = str(network)
@@ -48,8 +48,8 @@ class BaseModel():
         return s, n
 
     def save_network(self, network, network_label, iter_step):
-        save_filename = '{}_{}.pth'.format(iter_step, network_label)
-        save_path = os.path.join(self.opt['path']['models'], save_filename)
+        save_filename = "{}_{}.pth".format(iter_step, network_label)
+        save_path = os.path.join(self.opt["path"]["models"], save_filename)
         if isinstance(network, nn.DataParallel):
             network = network.module
         state_dict = network.state_dict()
@@ -63,22 +63,26 @@ class BaseModel():
         network.load_state_dict(torch.load(load_path), strict=strict)
 
     def save_training_state(self, epoch, iter_step):
-        '''Saves training state during training, which will be used for resuming'''
-        state = {'epoch': epoch, 'iter': iter_step, 'schedulers': [], 'optimizers': []}
+        """Saves training state during training, which will be used for resuming"""
+        state = {"epoch": epoch, "iter": iter_step, "schedulers": [], "optimizers": []}
         for s in self.schedulers:
-            state['schedulers'].append(s.state_dict())
+            state["schedulers"].append(s.state_dict())
         for o in self.optimizers:
-            state['optimizers'].append(o.state_dict())
-        save_filename = '{}.state'.format(iter_step)
-        save_path = os.path.join(self.opt['path']['training_state'], save_filename)
+            state["optimizers"].append(o.state_dict())
+        save_filename = "{}.state".format(iter_step)
+        save_path = os.path.join(self.opt["path"]["training_state"], save_filename)
         torch.save(state, save_path)
 
     def resume_training(self, resume_state):
-        '''Resume the optimizers and schedulers for training'''
-        resume_optimizers = resume_state['optimizers']
-        resume_schedulers = resume_state['schedulers']
-        assert len(resume_optimizers) == len(self.optimizers), 'Wrong lengths of optimizers'
-        assert len(resume_schedulers) == len(self.schedulers), 'Wrong lengths of schedulers'
+        """Resume the optimizers and schedulers for training"""
+        resume_optimizers = resume_state["optimizers"]
+        resume_schedulers = resume_state["schedulers"]
+        assert len(resume_optimizers) == len(
+            self.optimizers
+        ), "Wrong lengths of optimizers"
+        assert len(resume_schedulers) == len(
+            self.schedulers
+        ), "Wrong lengths of schedulers"
         for i, o in enumerate(resume_optimizers):
             self.optimizers[i].load_state_dict(o)
         for i, s in enumerate(resume_schedulers):

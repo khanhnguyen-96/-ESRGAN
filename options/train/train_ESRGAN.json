@@ -1,9 +1,9 @@
 {
-  "name": "RRDB_ESRGAN_x4_celeba_val_1000" //  please remove "debug_" during training
+  "name": "RRDB_ESRGAN_x8_celeba_val_1000" //  please remove "debug_" during training
   ,
   "use_tb_logger": true,
   "model": "srragan",
-  "scale": 4,
+  "scale": 8,
   "gpu_ids": [
     0
   ],
@@ -24,8 +24,8 @@
     "val": {
       "name": "helen_val_50",
       "mode": "LRHR",
-      "dataroot_HR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/helen_val_50_LR_8x.lmdb",
-      "dataroot_LR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/helen_val_50_HR.lmdb"
+      "dataroot_HR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/helen_val_50_HR.lmdb",
+      "dataroot_LR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/helen_val_50_LR_8x.lmdb"
     }
   },
   "path": {
@@ -45,7 +45,8 @@
     "in_nc": 3,
     "out_nc": 3,
     "gc": 32,
-    "group": 1
+    "group": 1,
+    "scale": 8
   },
   "network_D": {
     "which_model_D": "discriminator_vgg_128",
@@ -53,7 +54,8 @@
     "act_type": "leakyrelu",
     "mode": "CNA",
     "nf": 64,
-    "in_nc": 3
+    "in_nc": 3,
+    "scale": 8
   },
   "train": {
     "lr_G": 1e-4,
