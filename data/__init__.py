@@ -11,7 +11,7 @@ def create_dataloader(dataset, dataset_opt):
             dataset,
             batch_size=dataset_opt['batch_size'],
             shuffle=dataset_opt['use_shuffle'],
-            # num_workers=dataset_opt['n_workers'],
+            num_workers=dataset_opt['n_workers'],
             drop_last=True,
             pin_memory=True)
     else:
