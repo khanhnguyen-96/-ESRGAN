@@ -16,7 +16,7 @@
       "subset_file": null,
       "use_shuffle": true,
       "n_workers": 1,
-      "batch_size": 4,
+      "batch_size": 2,
       "HR_size": 128,
       "use_flip": true,
       "use_rot": true
