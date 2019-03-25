@@ -9,7 +9,7 @@
   ],
   "datasets": {
     "train": {
-      "name": "celeba_val_1000",
+      "name": "Flickr2K",
       "mode": "LRHR",
       "dataroot_HR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_HR.lmdb",
       "dataroot_LR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_LR_unknown_X4.lmdb",
@@ -22,10 +22,10 @@
       "use_rot": true
     },
     "val": {
-      "name": null,
+      "name": "PIRM_val",
       "mode": "LRHR",
-      "dataroot_HR": null,
-      "dataroot_LR": null
+      "dataroot_HR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/PIRM_Self-Val_set_HR.lmdb",
+      "dataroot_LR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/PIRM_Self-Val_set_LR.lmdb"
     }
   },
   "path": {
