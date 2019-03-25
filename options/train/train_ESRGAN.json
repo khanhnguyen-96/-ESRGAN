@@ -11,8 +11,8 @@
     "train": {
       "name": "Flickr2K",
       "mode": "LRHR",
-      "dataroot_HR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_HR.lmdb",
-      "dataroot_LR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_LR_unknown_X4.lmdb",
+      "dataroot_HR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_HR.lmdb",
+      "dataroot_LR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_LR_unknown_X4.lmdb",
       "subset_file": null,
       "use_shuffle": true,
       "n_workers": 4,
@@ -24,12 +24,12 @@
     "val": {
       "name": "PIRM_self_val",
       "mode": "LRHR",
-      "dataroot_HR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/PIRM_Self-Val_set_HR.lmdb",
-      "dataroot_LR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/PIRM_Self-Val_set_LR_4x.lmdb"
+      "dataroot_HR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/PIRM_Self-Val_set_HR.lmdb",
+      "dataroot_LR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/PIRM_Self-Val_set_LR_4x.lmdb"
     }
   },
   "path": {
-    "root": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/-ESRGAN"
+    "root": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/-ESRGAN"
     // ,
     // "resume_state": "experiments/RRDB_ESRGAN_x4_celeba_val_1000/training_state/1.state"
     ,
