@@ -1,9 +1,9 @@
 {
-  "name": "RRDB_ESRGAN_x8_celeba_val_1000" //  please remove "debug_" during training
+  "name": "RRDB_ESRGAN_x4_Flickr2K" //  please remove "debug_" during training
   ,
   "use_tb_logger": true,
   "model": "srragan",
-  "scale": 8,
+  "scale": 4,
   "gpu_ids": [
     0
   ],
@@ -11,8 +11,8 @@
     "train": {
       "name": "celeba_val_1000",
       "mode": "LRHR",
-      "dataroot_HR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/celeba_val_1000_HR.lmdb",
-      "dataroot_LR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/celeba_val_1000_LR_8x.lmdb",
+      "dataroot_HR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_HR.lmdb",
+      "dataroot_LR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_LR_unknown_X4.lmdb",
       "subset_file": null,
       "use_shuffle": true,
       "n_workers": 8,
@@ -22,10 +22,10 @@
       "use_rot": true
     },
     "val": {
-      "name": "helen_val_50",
+      "name": null,
       "mode": "LRHR",
-      "dataroot_HR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/helen_val_50_HR.lmdb",
-      "dataroot_LR": "/content/grive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/helen_val_50_LR_8x.lmdb"
+      "dataroot_HR": null,
+      "dataroot_LR": null
     }
   },
   "path": {
@@ -46,7 +46,7 @@
     "out_nc": 3,
     "gc": 32,
     "group": 1,
-    "scale": 8
+    "scale": 4
   },
   "network_D": {
     "which_model_D": "discriminator_vgg_128",
@@ -55,7 +55,7 @@
     "mode": "CNA",
     "nf": 64,
     "in_nc": 3,
-    "scale": 8
+    "scale": 4
   },
   "train": {
     "lr_G": 1e-4,
