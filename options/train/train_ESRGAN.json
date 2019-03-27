@@ -16,7 +16,7 @@
       "subset_file": null,
       "use_shuffle": true,
       "n_workers": 8,
-      "batch_size": 8,
+      "batch_size": 16,
       "HR_size": 128,
       "use_flip": true,
       "use_rot": true
@@ -89,6 +89,6 @@
   },
   "logger": {
     "print_freq": 200,
-    "save_checkpoint_freq": 5e3
+    "save_checkpoint_freq": 1e3
   }
 }
