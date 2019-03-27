@@ -11,12 +11,12 @@
     "train": {
       "name": "Flickr2K",
       "mode": "LRHR",
-      "dataroot_HR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_HR.lmdb",
-      "dataroot_LR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_LR_unknown_X4.lmdb",
+      "dataroot_HR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_MiniSet20_HR.lmdb",
+      "dataroot_LR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_MiniSet20_LRx4.lmdb",
       "subset_file": null,
       "use_shuffle": true,
-      "n_workers": 1,
-      "batch_size": 2,
+      "n_workers": 8,
+      "batch_size": 8,
       "HR_size": 128,
       "use_flip": true,
       "use_rot": true
