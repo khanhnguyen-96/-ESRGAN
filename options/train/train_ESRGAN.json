@@ -15,7 +15,7 @@
       "dataroot_LR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_MiniSet20_LRx4.lmdb",
       "subset_file": null,
       "use_shuffle": true,
-      "n_workers": 8,
+      "n_workers": 0,
       "batch_size": 16,
       "HR_size": 128,
       "use_flip": true,
