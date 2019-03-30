@@ -11,11 +11,11 @@
     "train": {
       "name": "Flickr2K_Miniset20",
       "mode": "LRHR",
-      "dataroot_HR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_MiniSet20_HR.lmdb",
-      "dataroot_LR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/Flickr2K_MiniSet20_LRx4.lmdb",
+      "dataroot_HR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/SRtrainset_2_HR.lmdb",
+      "dataroot_LR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/SRtrainset_2_x4.lmdb",
       "subset_file": null,
       "use_shuffle": true,
-      "n_workers": 0,
+      "n_workers": 1,
       "batch_size": 16,
       "HR_size": 128,
       "use_flip": true,
@@ -29,10 +29,10 @@
     }
   },
   "path": {
-    "root": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/-ESRGAN",
-    "resume_state": "experiments/RRDB_ESRGAN_x4_Flickr2K_MiniSet20/training_state/2000.state",
-    "pretrain_model_G": "experiments/RRDB_ESRGAN_x4_Flickr2K_MiniSet20/models/2000_G.pth",
-    "pretrain_model_D": "experiments/RRDB_ESRGAN_x4_Flickr2K_MiniSet20/models/2000_D.pth"
+    "root": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/-ESRGAN"
+    // ,"resume_state": "experiments/RRDB_ESRGAN_x4_Flickr2K_MiniSet20/training_state/2000.state",
+    // "pretrain_model_G": "experiments/RRDB_ESRGAN_x4_Flickr2K_MiniSet20/models/2000_G.pth",
+    // "pretrain_model_D": "experiments/RRDB_ESRGAN_x4_Flickr2K_MiniSet20/models/2000_D.pth"
   },
   "network_G": {
     "which_model_G": "RRDB_net" // RRDB_net | sr_resnet
