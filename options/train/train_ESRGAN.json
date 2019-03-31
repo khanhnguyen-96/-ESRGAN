@@ -1,5 +1,5 @@
 {
-  "name": "RRDB_ESRGAN_x4_Flickr2K_MiniSet20" //  please remove "debug_" during training
+  "name": "RRDB_ESRGAN_x4_SRtrainset_2" //  please remove "debug_" during training
   ,
   "use_tb_logger": true,
   "model": "srragan",
@@ -9,7 +9,7 @@
   ],
   "datasets": {
     "train": {
-      "name": "Flickr2K_Miniset20",
+      "name": "SRtrainset_2",
       "mode": "LRHR",
       "dataroot_HR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/SRtrainset_2_HR.lmdb",
       "dataroot_LR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/SRtrainset_2_x4.lmdb",
@@ -29,10 +29,10 @@
     }
   },
   "path": {
-    "root": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/-ESRGAN"
-    // ,"resume_state": "experiments/RRDB_ESRGAN_x4_Flickr2K_MiniSet20/training_state/2000.state",
-    // "pretrain_model_G": "experiments/RRDB_ESRGAN_x4_Flickr2K_MiniSet20/models/2000_G.pth",
-    // "pretrain_model_D": "experiments/RRDB_ESRGAN_x4_Flickr2K_MiniSet20/models/2000_D.pth"
+    "root": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/-ESRGAN",
+    "resume_state": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/training_state/4000.state",
+    "pretrain_model_G": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/models/4000_G.pth",
+    "pretrain_model_D": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/models/4000_D.pth"
   },
   "network_G": {
     "which_model_G": "RRDB_net" // RRDB_net | sr_resnet
