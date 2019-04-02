@@ -30,9 +30,9 @@
   },
   "path": {
     "root": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/-ESRGAN",
-    "resume_state": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/training_state/12000.state",
-    "pretrain_model_G": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/models/12000_G.pth",
-    "pretrain_model_D": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/models/12000_D.pth"
+    "resume_state": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/training_state/18000.state",
+    "pretrain_model_G": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/models/18000_G.pth",
+    "pretrain_model_D": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/models/18000_D.pth"
   },
   "network_G": {
     "which_model_G": "RRDB_net" // RRDB_net | sr_resnet
