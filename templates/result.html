@@ -28,13 +28,15 @@
         <div class="col">
             <h1>Low Resolution</h1>
             {% for lrFile in lrFiles %}
-            <img src="{{url_for('static', filename=lrFile)}}" alt="{{lrFile}}">
+            <img src="{{url_for('lr', filename=lrFile)}}" alt="{{lrFile}}">
+            {% endfor %}
         </div>
 
         <div class="col">
             <h1>High Resolution</h1>
             {% for hrFile in hrFiles %}
-            <img src="{{url_for('static', filename=hrFile)}}" alt="{{hrFile}}">
+            <img src="{{url_for('hr', filename=hrFile)}}" alt="{{hrFile}}">
+            {% endfor %}
         </div>
     </div>
   </body>

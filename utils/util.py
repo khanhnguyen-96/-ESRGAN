@@ -21,9 +21,6 @@ def get_timestamp():
 def mkdir(path):
     if not os.path.exists(path):
         os.makedirs(path)
-    else:
-        print("path: " + path)
-        # shutil.rmtree(path)
 
 
 def mkdirs(paths):
