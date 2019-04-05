@@ -5,15 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Result</title>
+
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 40px;
+        }
+
+        .col {
+            width: 50%;
+        }
+
+        .col img {
+            width: 100%;
+        }
+    </style>
   </head>
+
   <body>
-    <div>{{ filenames }}</div>
-    <ul>
-      {% for file in filenames %}
-      <li>
-        <div>{{ file }}</div>
-      </li>
-      {% endfor %}
-    </ul>
+    <div class="container">
+        <div class="col">
+            <h1>Low Resolution</h1>
+            {% for lrFile in lrFiles %}
+            <img src="{{url_for('static', filename=lrFile)}}" alt="{{lrFile}}">
+        </div>
+
+        <div class="col">
+            <h1>High Resolution</h1>
+            {% for hrFile in hrFiles %}
+            <img src="{{url_for('static', filename=hrFile)}}" alt="{{hrFile}}">
+        </div>
+    </div>
   </body>
 </html>

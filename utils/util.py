@@ -7,6 +7,7 @@ from torchvision.utils import make_grid
 import random
 import torch
 import logging
+import shutil
 
 ####################
 # miscellaneous
@@ -14,12 +15,15 @@ import logging
 
 
 def get_timestamp():
-    return datetime.now().strftime('%y%m%d-%H%M%S')
+    return datetime.now().strftime("%y%m%d-%H%M%S")
 
 
 def mkdir(path):
     if not os.path.exists(path):
         os.makedirs(path)
+    else:
+        print("path: " + path)
+        # shutil.rmtree(path)
 
 
 def mkdirs(paths):
@@ -32,10 +36,10 @@ def mkdirs(paths):
 
 def mkdir_and_rename(path):
     if os.path.exists(path):
-        new_name = path + '_archived_' + get_timestamp()
-        print('Path already exists. Rename it to [{:s}]'.format(new_name))
-        logger = logging.getLogger('base')
-        logger.info('Path already exists. Rename it to [{:s}]'.format(new_name))
+        new_name = path + "_archived_" + get_timestamp()
+        print("Path already exists. Rename it to [{:s}]".format(new_name))
+        logger = logging.getLogger("base")
+        logger.info("Path already exists. Rename it to [{:s}]".format(new_name))
         os.rename(path, new_name)
     os.makedirs(path)
 
@@ -48,12 +52,14 @@ def set_random_seed(seed):
 
 
 def setup_logger(logger_name, root, phase, level=logging.INFO, screen=False):
-    '''set up logger'''
+    """set up logger"""
     l = logging.getLogger(logger_name)
     formatter = logging.Formatter(
-        '%(asctime)s.%(msecs)03d - %(levelname)s: %(message)s', datefmt='%y-%m-%d %H:%M:%S')
-    log_file = os.path.join(root, phase + '_{}.log'.format(get_timestamp()))
-    fh = logging.FileHandler(log_file, mode='w')
+        "%(asctime)s.%(msecs)03d - %(levelname)s: %(message)s",
+        datefmt="%y-%m-%d %H:%M:%S",
+    )
+    log_file = os.path.join(root, phase + "_{}.log".format(get_timestamp()))
+    fh = logging.FileHandler(log_file, mode="w")
     fh.setFormatter(formatter)
     l.setLevel(level)
     l.addHandler(fh)
@@ -69,11 +75,11 @@ def setup_logger(logger_name, root, phase, level=logging.INFO, screen=False):
 
 
 def tensor2img(tensor, out_type=np.uint8, min_max=(0, 1)):
-    '''
+    """
     Converts a torch Tensor into an image Numpy array
     Input: 4D(B,(3/1),H,W), 3D(C,H,W), or 2D(H,W), any range, RGB channel order
     Output: 3D(H,W,C) or 2D(H,W), [0,255], np.uint8 (default)
-    '''
+    """
     tensor = tensor.squeeze().float().cpu().clamp_(*min_max)  # clamp
     tensor = (tensor - min_max[0]) / (min_max[1] - min_max[0])  # to range [0,1]
     n_dim = tensor.dim()
@@ -88,14 +94,17 @@ def tensor2img(tensor, out_type=np.uint8, min_max=(0, 1)):
         img_np = tensor.numpy()
     else:
         raise TypeError(
-            'Only support 4D, 3D and 2D tensor. But received with dimension: {:d}'.format(n_dim))
+            "Only support 4D, 3D and 2D tensor. But received with dimension: {:d}".format(
+                n_dim
+            )
+        )
     if out_type == np.uint8:
         img_np = (img_np * 255.0).round()
         # Important. Unlike matlab, numpy.unit8() WILL NOT round by default.
     return img_np.astype(out_type)
 
 
-def save_img(img, img_path, mode='RGB'):
+def save_img(img, img_path, mode="RGB"):
     cv2.imwrite(img_path, img)
 
 
@@ -108,15 +117,15 @@ def calculate_psnr(img1, img2):
     # img1 and img2 have range [0, 255]
     img1 = img1.astype(np.float64)
     img2 = img2.astype(np.float64)
-    mse = np.mean((img1 - img2)**2)
+    mse = np.mean((img1 - img2) ** 2)
     if mse == 0:
-        return float('inf')
+        return float("inf")
     return 20 * math.log10(255.0 / math.sqrt(mse))
 
 
 def ssim(img1, img2):
-    C1 = (0.01 * 255)**2
-    C2 = (0.03 * 255)**2
+    C1 = (0.01 * 255) ** 2
+    C2 = (0.03 * 255) ** 2
 
     img1 = img1.astype(np.float64)
     img2 = img2.astype(np.float64)
@@ -125,25 +134,26 @@ def ssim(img1, img2):
 
     mu1 = cv2.filter2D(img1, -1, window)[5:-5, 5:-5]  # valid
     mu2 = cv2.filter2D(img2, -1, window)[5:-5, 5:-5]
-    mu1_sq = mu1**2
-    mu2_sq = mu2**2
+    mu1_sq = mu1 ** 2
+    mu2_sq = mu2 ** 2
     mu1_mu2 = mu1 * mu2
-    sigma1_sq = cv2.filter2D(img1**2, -1, window)[5:-5, 5:-5] - mu1_sq
-    sigma2_sq = cv2.filter2D(img2**2, -1, window)[5:-5, 5:-5] - mu2_sq
+    sigma1_sq = cv2.filter2D(img1 ** 2, -1, window)[5:-5, 5:-5] - mu1_sq
+    sigma2_sq = cv2.filter2D(img2 ** 2, -1, window)[5:-5, 5:-5] - mu2_sq
     sigma12 = cv2.filter2D(img1 * img2, -1, window)[5:-5, 5:-5] - mu1_mu2
 
-    ssim_map = ((2 * mu1_mu2 + C1) * (2 * sigma12 + C2)) / ((mu1_sq + mu2_sq + C1) *
-                                                            (sigma1_sq + sigma2_sq + C2))
+    ssim_map = ((2 * mu1_mu2 + C1) * (2 * sigma12 + C2)) / (
+        (mu1_sq + mu2_sq + C1) * (sigma1_sq + sigma2_sq + C2)
+    )
     return ssim_map.mean()
 
 
 def calculate_ssim(img1, img2):
-    '''calculate SSIM
+    """calculate SSIM
     the same outputs as MATLAB's
     img1, img2: [0, 255]
-    '''
+    """
     if not img1.shape == img2.shape:
-        raise ValueError('Input images must have the same dimensions.')
+        raise ValueError("Input images must have the same dimensions.")
     if img1.ndim == 2:
         return ssim(img1, img2)
     elif img1.ndim == 3:
@@ -155,4 +165,4 @@ def calculate_ssim(img1, img2):
         elif img1.shape[2] == 1:
             return ssim(np.squeeze(img1), np.squeeze(img2))
     else:
-        raise ValueError('Wrong input image dimensions.')
+        raise ValueError("Wrong input image dimensions.")
