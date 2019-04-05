@@ -1,4 +1,4 @@
 venv/*
-models/RRDB_ESRGAN_x4.pth
 __pycache__/*
 experiments/*
+results/*
