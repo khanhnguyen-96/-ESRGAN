@@ -2,11 +2,13 @@ import cv2
 import numpy as np
 import math
 import sys
+import os
 import time
 from glob import glob
 
-from utils.progress_bar import ProgressBar
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.progress_bar import ProgressBar  # noqa: E402
+
 
 # Interpolation kernel
 def u(s, a):
@@ -17,7 +19,6 @@ def u(s, a):
     return 0
 
 
-# flake8: noqa
 # Padding
 def padding(img, H, W, C):
     zimg = np.zeros((H + 4, W + 4, C))
