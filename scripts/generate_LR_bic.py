@@ -6,6 +6,7 @@ import time
 from glob import glob
 
 from utils.progress_bar import ProgressBar
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Interpolation kernel
 def u(s, a):
