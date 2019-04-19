@@ -33,10 +33,13 @@
         </div>
 
         <div class="col">
-            <h1>High Resolution</h1>
+            <h1>High Resolution x4</h1>
             {% for hrFile in hrFiles %}
             <img src="{{url_for('hr', filename=hrFile)}}" alt="{{hrFile}}">
             {% endfor %}
+            <!-- {% for faceConfidence in faceConfidenceList %}
+            <h4>{{ faceConfidence }}</h4>
+            {% endfor %} -->
         </div>
     </div>
   </body>

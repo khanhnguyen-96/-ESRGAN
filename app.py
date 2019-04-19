@@ -10,6 +10,9 @@ from flask import (
     send_from_directory,
 )
 from werkzeug.utils import secure_filename
+import face_recognition
+import math
+
 import test
 import utils.util as util
 
@@ -63,7 +66,40 @@ def result():
         lrFiles = [file for file in os.listdir(UPLOAD_FOLDER)]
         hrFiles = [file for file in os.listdir(RESULT_FOLDER)]
 
-        return render_template("result.html", lrFiles=lrFiles, hrFiles=hrFiles)
+        # lrImages = []
+        # lrImagesEncoding = []
+        # hrImages = []
+        # hrImagesEncoding = []
+        # faceDistancesList = []
+        # faceConfidenceList = []
+
+        # i = 0
+
+        # for file in lrFiles:
+        #     lrImages.append(
+        #         face_recognition.load_image_file(UPLOAD_FOLDER + lrFiles[i])
+        #     )
+        #     lrImagesEncoding.append(face_recognition.face_encodings(lrImages[i])[0])
+        #     hrImages.append(
+        #         face_recognition.load_image_file(RESULT_FOLDER + hrFiles[i])
+        #     )
+        #     hrImagesEncoding.append(face_recognition.face_encodings(hrImages[i])[0])
+
+        #     faceDistancesList.append(
+        #         face_recognition.face_distance(
+        #             [lrImagesEncoding[i]], hrImagesEncoding[i]
+        #         )
+        #     )
+
+        # faceConfidenceList.append(face_distance_to_conf(faceDistancesList[i]))
+
+        # i = i + 1
+
+        return render_template(
+            "result.html",
+            lrFiles=lrFiles,
+            hrFiles=hrFiles,
+        )
 
 
 @app.route("/lr/<path:filename>")
@@ -74,3 +110,15 @@ def lr(filename):
 @app.route("/hr/<path:filename>")
 def hr(filename):
     return send_from_directory(app.config["RESULT_FOLDER"], filename)
+
+
+def face_distance_to_conf(face_distance, face_match_threshold=0.6):
+    if face_distance > face_match_threshold:
+        range = 1.0 - face_match_threshold
+        linear_val = (1.0 - face_distance) / (range * 2.0)
+        return linear_val
+    else:
+        range = face_match_threshold
+        linear_val = 1.0 - (face_distance / (range * 2.0))
+        return linear_val + ((1.0 - linear_val) * math.pow((linear_val - 0.5) * 2, 0.2))
+
