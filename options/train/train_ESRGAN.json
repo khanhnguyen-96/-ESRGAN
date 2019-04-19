@@ -11,8 +11,8 @@
     "train": {
       "name": "SRtrainset_2",
       "mode": "LRHR",
-      "dataroot_HR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/SRtrainset_2_HR.lmdb",
-      "dataroot_LR": "/content/gdrive/My Drive/LVTN/SuperResolution/ESRGAN/Dataset/SRtrainset_2_x4.lmdb",
+      "dataroot_HR": "/content/dataset/img_align_celeba_png_set_1_HR.lmdb",
+      "dataroot_LR": "/content/dataset/img_align_celeba_png_set_1_x4.lmdb",
       "subset_file": null,
       "use_shuffle": true,
       "n_workers": 1,

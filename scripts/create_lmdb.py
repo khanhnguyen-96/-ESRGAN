@@ -10,10 +10,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # configurations
 img_folder = (
-    "/content/dataset/img_align_celeba_png_set_1/*"
+    "/content/dataset/img_align_celeba_png_set_1_HR/*"
 )  # glob matching pattern
 lmdb_save_path = (
-    "/content/dataset/img_align_celeba_png_set_1.lmdb"
+    "/content/dataset/img_align_celeba_png_set_1_HR.lmdb"
 )  # must end with .lmdb
 
 img_list = sorted(glob.glob(img_folder))
