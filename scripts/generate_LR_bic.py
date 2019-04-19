@@ -134,7 +134,7 @@ a = -1 / 2
 pbar = ProgressBar(len(hr_list))
 
 for index, value in enumerate(hr_list):
-    pbar.update("Read {}".format(v))
+    pbar.update("Read {}".format(value))
     # Read image
     img = cv2.imread(value)
     dst = bicubic(img, ratio, a)
