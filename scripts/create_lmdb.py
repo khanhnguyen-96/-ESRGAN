@@ -5,8 +5,8 @@ import pickle
 import lmdb
 import cv2
 
-from utils.progress_bar import ProgressBar
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.progress_bar import ProgressBar  # noqa: E402
 
 # configurations
 img_folder = (
