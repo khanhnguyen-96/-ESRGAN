@@ -8,7 +8,7 @@
   , "datasets": {
     "test_1": { // the 1st test dataset
       "name": "demo"
-      , "mode": "LR"
+      , "mode": "LRHR"
       , "dataroot_HR": "C:/Users/LTT/OneDrive - K3v/Documents/LVTN/Dataset/demo/HR"
       , "dataroot_LR": "C:/Users/LTT/OneDrive - K3v/Documents/LVTN/Dataset/demo/LRx4"
     }
