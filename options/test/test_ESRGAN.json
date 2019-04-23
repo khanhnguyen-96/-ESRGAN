@@ -9,8 +9,8 @@
     "test_1": { // the 1st test dataset
       "name": "demo"
       , "mode": "LRHR"
-      , "dataroot_HR": "C:/Users/LTT/OneDrive - K3v/Documents/LVTN/Dataset/demo/HR"
-      , "dataroot_LR": "C:/Users/LTT/OneDrive - K3v/Documents/LVTN/Dataset/demo/LRx4"
+      , "dataroot_HR": "/content/dataset/img_align_celeba_png_set_1_HR"
+      , "dataroot_LR": "/content/dataset/img_align_celeba_png_set_1_LR"
     }
     // , "test_2": { // the 2nd test dataset
     //   "name": "set14"
@@ -21,9 +21,9 @@
   }
 
   , "path": {
-    "root": "C:/Users/LTT/OneDrive - K3v/Documents/LVTN/-ESRGAN/"
+    "root": "content/dataset/-ESRGAN/"
     // , "pretrain_model_G": "E:/Studying stuffs/LVTN/2018/-ESRGAN/experiments/pretrained_models/50000_G.pth"
-    , "pretrain_model_G": "C:/Users/LTT/OneDrive - K3v/Documents/LVTN/-ESRGAN/experiments/RRDB_PSNR_x4/models/RRDB_PSNR_x4.pth"
+    , "pretrain_model_G": "/content/-ESRGAN/experiments/RRDB_PSNR_x4/models/RRDB_PSNR_x4.pth"
   }
 
   , "network_G": {
