@@ -2,13 +2,13 @@ from PIL import Image
 import sys
 import os
 
-from utils import util
-
 # import time
 from glob import glob
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils import util  # noqa: E402
 from utils.progress_bar import ProgressBar  # noqa: E402
+
 
 # LR, HR path
 hr_path = "content/dataset/img_align_celeba_png_set_1_HR/*"
