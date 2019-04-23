@@ -124,8 +124,8 @@ def bicubic(img, ratio, a):
 
 
 # LR, HR path
-hr_path = "/content/dataset/img_align_celeba_png_set_1_HR/*"
-lr_path = "/content/dataset/img_align_celeba_png_set_1_LR_x4/"
+hr_path = "C:/Users/LTT/OneDrive - K3v/Documents/LVTN/dataset/demo/HR/*"
+lr_path = "C:/Users/LTT/OneDrive - K3v/Documents/LVTN/Dataset/demo/LRx4/"
 hr_list = sorted(glob(hr_path))
 
 # Scale factor
@@ -139,6 +139,6 @@ for index, value in enumerate(hr_list):
     # Read image
     img = cv2.imread(value)
     dst = bicubic(img, ratio, a)
-    cv2.imwrite(lr_path + value, dst)
+    cv2.imwrite(lr_path + os.path.basename(value), dst)
 
 print("Completed!")

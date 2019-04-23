@@ -1,9 +1,11 @@
 import os
-import sys
+
+# import sys
 import logging
-import time
-import argparse
-import numpy as np
+# import time
+
+# import argparse
+# import numpy as np
 from collections import OrderedDict
 
 import options.options as option
@@ -48,7 +50,7 @@ def main(jsonPath):
     for test_loader in test_loaders:
         test_set_name = test_loader.dataset.opt["name"]
         logger.info("\nTesting [{:s}]...".format(test_set_name))
-        test_start_time = time.time()
+        # test_start_time = time.time()
         dataset_dir = os.path.join(opt["path"]["results_root"], test_set_name)
         util.mkdir(dataset_dir)
 

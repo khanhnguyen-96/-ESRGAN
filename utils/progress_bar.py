@@ -43,7 +43,7 @@ class ProgressBar(object):
     def update(self, msg="In progress..."):
         self.completed += 1
         elapsed = time.time() - self.start_time
-        fps = self.completed / elapsed
+        fps = self.completed / elapsed if elapsed != 0 else self.completed
         if self.task_num > 0:
             percentage = self.completed / float(self.task_num)
             eta = int(elapsed * (1 - percentage) / percentage + 0.5)

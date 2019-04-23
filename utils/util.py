@@ -7,7 +7,7 @@ from torchvision.utils import make_grid
 import random
 import torch
 import logging
-import shutil
+# import shutil
 
 ####################
 # miscellaneous
