@@ -12,7 +12,7 @@ from utils.progress_bar import ProgressBar  # noqa: E402
 
 # LR, HR path
 hr_path = "/content/dataset/img_align_celeba_png_set_1_HR/*"
-lr_path = "/content/dataset/img_align_celeba_png_set_1_LR/"
+lr_path = "/content/dataset/img_align_celeba_png_set_1_x4/"
 hr_list = sorted(glob(hr_path))
 
 # Scale factor
