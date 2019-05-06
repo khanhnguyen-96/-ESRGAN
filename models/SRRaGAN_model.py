@@ -297,4 +297,3 @@ class SRRaGANModel(BaseModel):
     def save(self, iter_step):
         self.save_network(self.netG, "G", iter_step)
         self.save_network(self.netD, "D", iter_step)
-

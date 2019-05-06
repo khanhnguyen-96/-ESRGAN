@@ -9,20 +9,26 @@ from utils.progress_bar import ProgressBar  # noqa: E402
 filePath = "C:/Users/LTT/OneDrive - K3v/Documents/LVTN/Dataset/demo/HR/*"
 resultPath = "C:/Users/LTT/OneDrive - K3v/Documents/LVTN/Dataset/demo/HR_withScores/"
 
-fileList = sorted(glob(filePath))
-pbar = ProgressBar(len(fileList))
 
-for index, value in enumerate(fileList):
-    pbar.update("Read {}".format(value))
-    # Read image
-    img = Image.open(value, "r")
+def drawResultDirectory(filePath, resultPath, *args):
+    fileList = sorted(glob(filePath))
+    pbar = ProgressBar(len(fileList))
 
-    # Draw text
-    d = ImageDraw.Draw(img)
-    d.text((10, 10), "Hello World", fill=(255, 255, 0))
-    d.text((10, 20), "Hello World", fill=(255, 255, 0))
-    d.text((10, 30), "Hello World", fill=(255, 255, 0))
+    for index, value in enumerate(fileList):
+        pbar.update("Read {}".format(value))
+        # Read image
+        img = Image.open(value, "r")
 
-    img.save(resultPath + os.path.basename(value))
+        img = drawResultFile(img, args)
+        img.save(resultPath + os.path.basename(value))
 
-print("Completed!")
+    print("Completed!")
+
+
+def drawResultFile(file, *args):
+    d = ImageDraw.Draw(file)
+
+    for i, score in enumerate(args):
+        d.text((10, 10 * i), score, fill=(255, 255, 0))
+
+    return file
