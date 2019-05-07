@@ -1,6 +1,6 @@
 {
   "name": "RRDB_ESRGAN_x4"
-  , "suffix": "_RRDB_ESRGAN_x4"
+  , "suffix": null
   , "model": "srragan"
   , "scale": 4
   , "gpu_ids": [0]
@@ -9,8 +9,8 @@
     "test_1": { // the 1st test dataset
       "name": "demo"
       , "mode": "LRHR"
-      , "dataroot_HR": "/content/dataset/img_align_celeba_png_set_1_HR"
-      , "dataroot_LR": "/content/dataset/img_align_celeba_png_set_1_x4"
+      , "dataroot_HR": "/content/dataset/recognized_img_align_celeba_png_set_1_HR"
+      , "dataroot_LR": "/content/dataset/recognized_img_align_celeba_png_set_1_x4"
     }
     // , "test_2": { // the 2nd test dataset
     //   "name": "set14"
