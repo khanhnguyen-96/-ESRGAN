@@ -11,8 +11,8 @@ from utils.progress_bar import ProgressBar  # noqa: E402
 
 
 # LR, HR path
-hr_path = "/content/dataset/unknownPeopleLFW/*"
-lr_path = "/content/dataset/unknownPeopleLFWx4/"
+hr_path = "/content/dataset/unknownCelebA/*"
+lr_path = "/content/dataset/unknownCelebAx4/"
 hr_list = sorted(glob(hr_path))
 
 # Scale factor
@@ -25,6 +25,7 @@ util.mkdir(lr_path)
 
 for index, value in enumerate(hr_list):
     pbar.update("Read {}".format(value))
+    sys.stdout.flush()
     # Read image
     img = Image.open(value, "r")
     dst = img.resize((tuple([int(x * ratio) for x in img.size])), Image.BICUBIC)
