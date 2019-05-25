@@ -9,8 +9,8 @@
     "test_1": { // the 1st test dataset
       "name": "demo"
       , "mode": "LRHR"
-      , "dataroot_HR": "/content/dataset/unknownPeopleLFW"
-      , "dataroot_LR": "/content/dataset/unknownPeopleLFWx4"
+      , "dataroot_HR": "/content/dataset/unknownCelebA_set1"
+      , "dataroot_LR": "/content/dataset/unknownCelebA_set1x4/"
     }
     // , "test_2": { // the 2nd test dataset
     //   "name": "set14"
