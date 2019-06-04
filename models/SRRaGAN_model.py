@@ -1,4 +1,4 @@
-import os
+# import os
 import logging
 from collections import OrderedDict
 
@@ -192,10 +192,8 @@ class SRRaGANModel(BaseModel):
                 + (1 - self.random_pt) * self.var_ref
             )
             interp.requires_grad = True
-            interp_crit, _ = self.netD(interp)
-            l_d_gp = self.l_gp_w * self.cri_gp(
-                interp, interp_crit
-            )  # maybe wrong in cls?
+            interp_crit = self.netD(interp)
+            l_d_gp = self.l_gp_w * self.cri_gp(interp, interp_crit)
             l_d_total += l_d_gp
 
         l_d_total.backward()

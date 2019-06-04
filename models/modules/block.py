@@ -12,26 +12,30 @@ def act(act_type, inplace=True, neg_slope=0.2, n_prelu=1):
     # neg_slope: for leakyrelu and init of prelu
     # n_prelu: for p_relu num_parameters
     act_type = act_type.lower()
-    if act_type == 'relu':
+    if act_type == "relu":
         layer = nn.ReLU(inplace)
-    elif act_type == 'leakyrelu':
+    elif act_type == "leakyrelu":
         layer = nn.LeakyReLU(neg_slope, inplace)
-    elif act_type == 'prelu':
+    elif act_type == "prelu":
         layer = nn.PReLU(num_parameters=n_prelu, init=neg_slope)
     else:
-        raise NotImplementedError('activation layer [{:s}] is not found'.format(act_type))
+        raise NotImplementedError(
+            "activation layer [{:s}] is not found".format(act_type)
+        )
     return layer
 
 
 def norm(norm_type, nc):
     # helper selecting normalization layer
     norm_type = norm_type.lower()
-    if norm_type == 'batch':
+    if norm_type == "batch":
         layer = nn.BatchNorm2d(nc, affine=True)
-    elif norm_type == 'instance':
+    elif norm_type == "instance":
         layer = nn.InstanceNorm2d(nc, affine=False)
     else:
-        raise NotImplementedError('normalization layer [{:s}] is not found'.format(norm_type))
+        raise NotImplementedError(
+            "normalization layer [{:s}] is not found".format(norm_type)
+        )
     return layer
 
 
@@ -41,12 +45,14 @@ def pad(pad_type, padding):
     pad_type = pad_type.lower()
     if padding == 0:
         return None
-    if pad_type == 'reflect':
+    if pad_type == "reflect":
         layer = nn.ReflectionPad2d(padding)
-    elif pad_type == 'replicate':
+    elif pad_type == "replicate":
         layer = nn.ReplicationPad2d(padding)
     else:
-        raise NotImplementedError('padding layer [{:s}] is not implemented'.format(pad_type))
+        raise NotImplementedError(
+            "padding layer [{:s}] is not implemented".format(pad_type)
+        )
     return layer
 
 
@@ -67,14 +73,14 @@ class ConcatBlock(nn.Module):
         return output
 
     def __repr__(self):
-        tmpstr = 'Identity .. \n|'
-        modstr = self.sub.__repr__().replace('\n', '\n|')
+        tmpstr = "Identity .. \n|"
+        modstr = self.sub.__repr__().replace("\n", "\n|")
         tmpstr = tmpstr + modstr
         return tmpstr
 
 
 class ShortcutBlock(nn.Module):
-    #Elementwise sum the output of a submodule to its input
+    # Elementwise sum the output of a submodule to its input
     def __init__(self, submodule):
         super(ShortcutBlock, self).__init__()
         self.sub = submodule
@@ -84,8 +90,8 @@ class ShortcutBlock(nn.Module):
         return output
 
     def __repr__(self):
-        tmpstr = 'Identity + \n|'
-        modstr = self.sub.__repr__().replace('\n', '\n|')
+        tmpstr = "Identity + \n|"
+        modstr = self.sub.__repr__().replace("\n", "\n|")
         tmpstr = tmpstr + modstr
         return tmpstr
 
@@ -94,7 +100,7 @@ def sequential(*args):
     # Flatten Sequential. It unwraps nn.Sequential.
     if len(args) == 1:
         if isinstance(args[0], OrderedDict):
-            raise NotImplementedError('sequential does not support OrderedDict input.')
+            raise NotImplementedError("sequential does not support OrderedDict input.")
         return args[0]  # No sequential is needed.
     modules = []
     for module in args:
@@ -106,25 +112,44 @@ def sequential(*args):
     return nn.Sequential(*modules)
 
 
-def conv_block(in_nc, out_nc, kernel_size, stride=1, dilation=1, groups=1, bias=True, \
-               pad_type='zero', norm_type=None, act_type='relu', mode='CNA'):
-    '''
+def conv_block(
+    in_nc,
+    out_nc,
+    kernel_size,
+    stride=1,
+    dilation=1,
+    groups=1,
+    bias=True,
+    pad_type="zero",
+    norm_type=None,
+    act_type="relu",
+    mode="CNA",
+):
+    """
     Conv layer with padding, normalization, activation
     mode: CNA --> Conv -> Norm -> Act
         NAC --> Norm -> Act --> Conv (Identity Mappings in Deep Residual Networks, ECCV16)
-    '''
-    assert mode in ['CNA', 'NAC', 'CNAC'], 'Wong conv mode [{:s}]'.format(mode)
+    """
+    assert mode in ["CNA", "NAC", "CNAC"], "Wrong conv mode [{:s}]".format(mode)
     padding = get_valid_padding(kernel_size, dilation)
-    p = pad(pad_type, padding) if pad_type and pad_type != 'zero' else None
-    padding = padding if pad_type == 'zero' else 0
+    p = pad(pad_type, padding) if pad_type and pad_type != "zero" else None
+    padding = padding if pad_type == "zero" else 0
 
-    c = nn.Conv2d(in_nc, out_nc, kernel_size=kernel_size, stride=stride, padding=padding, \
-            dilation=dilation, bias=bias, groups=groups)
+    c = nn.Conv2d(
+        in_nc,
+        out_nc,
+        kernel_size=kernel_size,
+        stride=stride,
+        padding=padding,
+        dilation=dilation,
+        bias=bias,
+        groups=groups,
+    )
     a = act(act_type) if act_type else None
-    if 'CNA' in mode:
+    if "CNA" in mode:
         n = norm(norm_type, out_nc) if norm_type else None
         return sequential(p, c, n, a)
-    elif mode == 'NAC':
+    elif mode == "NAC":
         if norm_type is None and act_type is not None:
             a = act(act_type, inplace=False)
             # Important!
@@ -141,30 +166,67 @@ def conv_block(in_nc, out_nc, kernel_size, stride=1, dilation=1, groups=1, bias=
 
 
 class ResNetBlock(nn.Module):
-    '''
+    """
     ResNet Block, 3-3 style
     with extra residual scaling used in EDSR
     (Enhanced Deep Residual Networks for Single Image Super-Resolution, CVPRW 17)
-    '''
+    """
 
-    def __init__(self, in_nc, mid_nc, out_nc, kernel_size=3, stride=1, dilation=1, groups=1, \
-            bias=True, pad_type='zero', norm_type=None, act_type='relu', mode='CNA', res_scale=1):
+    def __init__(
+        self,
+        in_nc,
+        mid_nc,
+        out_nc,
+        kernel_size=3,
+        stride=1,
+        dilation=1,
+        groups=1,
+        bias=True,
+        pad_type="zero",
+        norm_type=None,
+        act_type="relu",
+        mode="CNA",
+        res_scale=1,
+    ):
         super(ResNetBlock, self).__init__()
-        conv0 = conv_block(in_nc, mid_nc, kernel_size, stride, dilation, groups, bias, pad_type, \
-            norm_type, act_type, mode)
-        if mode == 'CNA':
+        conv0 = conv_block(
+            in_nc,
+            mid_nc,
+            kernel_size,
+            stride,
+            dilation,
+            groups,
+            bias,
+            pad_type,
+            norm_type,
+            act_type,
+            mode,
+        )
+        if mode == "CNA":
             act_type = None
-        if mode == 'CNAC':  # Residual path: |-CNAC-|
+        if mode == "CNAC":  # Residual path: |-CNAC-|
             act_type = None
             norm_type = None
-        conv1 = conv_block(mid_nc, out_nc, kernel_size, stride, dilation, groups, bias, pad_type, \
-            norm_type, act_type, mode)
+        conv1 = conv_block(
+            mid_nc,
+            out_nc,
+            kernel_size,
+            stride,
+            dilation,
+            groups,
+            bias,
+            pad_type,
+            norm_type,
+            act_type,
+            mode,
+        )
         # if in_nc != out_nc:
-        #     self.project = conv_block(in_nc, out_nc, 1, stride, dilation, 1, bias, pad_type, \
-        #         None, None)
-        #     print('Need a projecter in ResNetBlock.')
+        #     self.project = conv_block(
+        #         in_nc, out_nc, 1, stride, dilation, 1, bias, pad_type, None, None
+        #     )
+        #     print("Need a projecter in ResNetBlock.")
         # else:
-        #     self.project = lambda x:x
+        #     self.project = lambda x: x
         self.res = sequential(conv0, conv1)
         self.res_scale = res_scale
 
@@ -174,30 +236,85 @@ class ResNetBlock(nn.Module):
 
 
 class ResidualDenseBlock_5C(nn.Module):
-    '''
+    """
     Residual Dense Block
     style: 5 convs
     The core module of paper: (Residual Dense Network for Image Super-Resolution, CVPR 18)
-    '''
+    """
 
-    def __init__(self, nc, kernel_size=3, gc=32, stride=1, bias=True, pad_type='zero', \
-            norm_type=None, act_type='leakyrelu', mode='CNA'):
+    def __init__(
+        self,
+        nc,
+        kernel_size=3,
+        gc=32,
+        stride=1,
+        bias=True,
+        pad_type="zero",
+        norm_type=None,
+        act_type="leakyrelu",
+        mode="CNA",
+    ):
         super(ResidualDenseBlock_5C, self).__init__()
         # gc: growth channel, i.e. intermediate channels
-        self.conv1 = conv_block(nc, gc, kernel_size, stride, bias=bias, pad_type=pad_type, \
-            norm_type=norm_type, act_type=act_type, mode=mode)
-        self.conv2 = conv_block(nc+gc, gc, kernel_size, stride, bias=bias, pad_type=pad_type, \
-            norm_type=norm_type, act_type=act_type, mode=mode)
-        self.conv3 = conv_block(nc+2*gc, gc, kernel_size, stride, bias=bias, pad_type=pad_type, \
-            norm_type=norm_type, act_type=act_type, mode=mode)
-        self.conv4 = conv_block(nc+3*gc, gc, kernel_size, stride, bias=bias, pad_type=pad_type, \
-            norm_type=norm_type, act_type=act_type, mode=mode)
-        if mode == 'CNA':
+        self.conv1 = conv_block(
+            nc,
+            gc,
+            kernel_size,
+            stride,
+            bias=bias,
+            pad_type=pad_type,
+            norm_type=norm_type,
+            act_type=act_type,
+            mode=mode,
+        )
+        self.conv2 = conv_block(
+            nc + gc,
+            gc,
+            kernel_size,
+            stride,
+            bias=bias,
+            pad_type=pad_type,
+            norm_type=norm_type,
+            act_type=act_type,
+            mode=mode,
+        )
+        self.conv3 = conv_block(
+            nc + 2 * gc,
+            gc,
+            kernel_size,
+            stride,
+            bias=bias,
+            pad_type=pad_type,
+            norm_type=norm_type,
+            act_type=act_type,
+            mode=mode,
+        )
+        self.conv4 = conv_block(
+            nc + 3 * gc,
+            gc,
+            kernel_size,
+            stride,
+            bias=bias,
+            pad_type=pad_type,
+            norm_type=norm_type,
+            act_type=act_type,
+            mode=mode,
+        )
+        if mode == "CNA":
             last_act = None
         else:
             last_act = act_type
-        self.conv5 = conv_block(nc+4*gc, nc, 3, stride, bias=bias, pad_type=pad_type, \
-            norm_type=norm_type, act_type=last_act, mode=mode)
+        self.conv5 = conv_block(
+            nc + 4 * gc,
+            nc,
+            3,
+            stride,
+            bias=bias,
+            pad_type=pad_type,
+            norm_type=norm_type,
+            act_type=last_act,
+            mode=mode,
+        )
 
     def forward(self, x):
         x1 = self.conv1(x)
@@ -209,20 +326,33 @@ class ResidualDenseBlock_5C(nn.Module):
 
 
 class RRDB(nn.Module):
-    '''
+    """
     Residual in Residual Dense Block
     (ESRGAN: Enhanced Super-Resolution Generative Adversarial Networks)
-    '''
+    """
 
-    def __init__(self, nc, kernel_size=3, gc=32, stride=1, bias=True, pad_type='zero', \
-            norm_type=None, act_type='leakyrelu', mode='CNA'):
+    def __init__(
+        self,
+        nc,
+        kernel_size=3,
+        gc=32,
+        stride=1,
+        bias=True,
+        pad_type="zero",
+        norm_type=None,
+        act_type="leakyrelu",
+        mode="CNA",
+    ):
         super(RRDB, self).__init__()
-        self.RDB1 = ResidualDenseBlock_5C(nc, kernel_size, gc, stride, bias, pad_type, \
-            norm_type, act_type, mode)
-        self.RDB2 = ResidualDenseBlock_5C(nc, kernel_size, gc, stride, bias, pad_type, \
-            norm_type, act_type, mode)
-        self.RDB3 = ResidualDenseBlock_5C(nc, kernel_size, gc, stride, bias, pad_type, \
-            norm_type, act_type, mode)
+        self.RDB1 = ResidualDenseBlock_5C(
+            nc, kernel_size, gc, stride, bias, pad_type, norm_type, act_type, mode
+        )
+        self.RDB2 = ResidualDenseBlock_5C(
+            nc, kernel_size, gc, stride, bias, pad_type, norm_type, act_type, mode
+        )
+        self.RDB3 = ResidualDenseBlock_5C(
+            nc, kernel_size, gc, stride, bias, pad_type, norm_type, act_type, mode
+        )
 
     def forward(self, x):
         out = self.RDB1(x)
@@ -236,15 +366,50 @@ class RRDB(nn.Module):
 ####################
 
 
-def pixelshuffle_block(in_nc, out_nc, upscale_factor=2, kernel_size=3, stride=1, bias=True, \
-                        pad_type='zero', norm_type=None, act_type='relu'):
-    '''
+class Interpolate(nn.Module):
+    """
+    This nn.Module is used to replace the deprecated nn.Upsample
+    """
+
+    def __init__(self, scale_factor, mode):
+        super(Interpolate, self).__init__()
+        self.interp = nn.functional.interpolate
+        self.scale_factor = scale_factor
+        self.mode = mode
+
+    def forward(self, x):
+        x = self.interp(
+            x, scale_factor=self.scale_factor, mode=self.mode, align_corners=False
+        )
+        return x
+
+
+def pixelshuffle_block(
+    in_nc,
+    out_nc,
+    upscale_factor=2,
+    kernel_size=3,
+    stride=1,
+    bias=True,
+    pad_type="zero",
+    norm_type=None,
+    act_type="relu",
+):
+    """
     Pixel shuffle layer
-    (Real-Time Single Image and Video Super-Resolution Using an Efficient Sub-Pixel Convolutional
-    Neural Network, CVPR17)
-    '''
-    conv = conv_block(in_nc, out_nc * (upscale_factor ** 2), kernel_size, stride, bias=bias, \
-                        pad_type=pad_type, norm_type=None, act_type=None)
+    (Real-Time Single Image and Video Super-Resolution Using an Efficient Sub-Pixel
+    Convolutional Neural Network, CVPR17)
+    """
+    conv = conv_block(
+        in_nc,
+        out_nc * (upscale_factor ** 2),
+        kernel_size,
+        stride,
+        bias=bias,
+        pad_type=pad_type,
+        norm_type=None,
+        act_type=None,
+    )
     pixel_shuffle = nn.PixelShuffle(upscale_factor)
 
     n = norm(norm_type, out_nc) if norm_type else None
@@ -252,11 +417,30 @@ def pixelshuffle_block(in_nc, out_nc, upscale_factor=2, kernel_size=3, stride=1,
     return sequential(conv, pixel_shuffle, n, a)
 
 
-def upconv_blcok(in_nc, out_nc, upscale_factor=2, kernel_size=3, stride=1, bias=True, \
-                pad_type='zero', norm_type=None, act_type='relu', mode='nearest'):
+def upconv_blcok(
+    in_nc,
+    out_nc,
+    upscale_factor=2,
+    kernel_size=3,
+    stride=1,
+    bias=True,
+    pad_type="zero",
+    norm_type=None,
+    act_type="relu",
+    mode="nearest",
+):
     # Up conv
     # described in https://distill.pub/2016/deconv-checkerboard/
-    upsample = nn.Upsample(scale_factor=upscale_factor, mode=mode)
-    conv = conv_block(in_nc, out_nc, kernel_size, stride, bias=bias, \
-                        pad_type=pad_type, norm_type=norm_type, act_type=act_type)
+    # upsample = nn.Upsample(scale_factor=upscale_factor, mode=mode)
+    upsample = Interpolate(scale_factor=upscale_factor, mode=mode)
+    conv = conv_block(
+        in_nc,
+        out_nc,
+        kernel_size,
+        stride,
+        bias=bias,
+        pad_type=pad_type,
+        norm_type=norm_type,
+        act_type=act_type,
+    )
     return sequential(upsample, conv)

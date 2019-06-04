@@ -9,9 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.progress_bar import ProgressBar  # noqa: E402
 
 # configurations
-img_folder = (
-    "/content/dataset/img_align_celeba_png_set_1_HR/*"
-)  # glob matching pattern
+img_folder = "/content/dataset/img_align_celeba_png_set_1_HR/*"  # glob matching pattern
 lmdb_save_path = (
     "/content/dataset/img_align_celeba_png_set_1_HR.lmdb"
 )  # must end with .lmdb
@@ -19,18 +17,26 @@ lmdb_save_path = (
 img_list = sorted(glob.glob(img_folder))
 dataset = []
 data_size = 0
+# 1 for small data (more memory), 2 for large data (less memory)
+mode = 1
 
 print("Read images...")
-pbar = ProgressBar(len(img_list))
-for i, v in enumerate(img_list):
-    pbar.update("Read {}".format(v))
-    img = cv2.imread(v, cv2.IMREAD_UNCHANGED)
-    dataset.append(img)
-    data_size += img.nbytes
-env = lmdb.open(lmdb_save_path, map_size=data_size * 10)
-print("Finish reading {} images.\nWrite lmdb...".format(len(img_list)))
 
+# mode 1 small data, read all imgs
+if mode == 1:
+    dataset = [cv2.imread(v, cv2.IMREAD_UNCHANGED) for v in img_list]
+    data_size = sum([img.nbytes for img in dataset])
+# mode 2 large data, read imgs later
+elif mode == 2:
+    data_size = sum(os.stat(v).st_size for v in img_list)
+else:
+    raise ValueError("mode should be 1 or 2")
+
+print('Finish reading {} images.\nWrite lmdb...'.format(len(img_list)))
+
+env = lmdb.open(lmdb_save_path, map_size=data_size * 10)
 pbar = ProgressBar(len(img_list))
+
 with env.begin(write=True) as txn:  # txn is a Transaction object
     for i, v in enumerate(img_list):
         pbar.update("Write {}".format(v))
