@@ -379,7 +379,7 @@ class Interpolate(nn.Module):
 
     def forward(self, x):
         x = self.interp(
-            x, scale_factor=self.scale_factor, mode=self.mode, align_corners=False
+            x, scale_factor=self.scale_factor, mode=self.mode
         )
         return x
 
