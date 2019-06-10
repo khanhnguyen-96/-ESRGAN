@@ -11,8 +11,8 @@ from utils.progress_bar import ProgressBar  # noqa: E402
 
 
 # LR, HR path
-hr_path = "/content/dataset/unknownCelebA_set1/*"
-lr_path = "/content/dataset/unknownCelebA_set1x4/"
+hr_path = "/content/dataset/unknownCelebA_set2/*"
+lr_path = "/content/dataset/unknownCelebA_set2_x4/"
 hr_list = sorted(glob(hr_path))
 
 # Scale factor

@@ -1,5 +1,5 @@
 {
-  "name": "RRDB_ESRGAN_x4_img_align_celeba_png_set_1" //  please remove "debug_" during training
+  "name": "RRDB_ESRGAN_x4_CelebA_set_2" //  please remove "debug_" during training
   ,
   "use_tb_logger": true,
   "model": "srragan",
@@ -11,8 +11,8 @@
     "train": {
       "name": "SRtrainset_2",
       "mode": "LRHR",
-      "dataroot_HR": "/content/dataset/img_align_celeba_png_set_1_HR.lmdb",
-      "dataroot_LR": "/content/dataset/img_align_celeba_png_set_1_x4.lmdb",
+      "dataroot_HR": "/content/dataset/unknownCelebA_set2_HR.lmdb",
+      "dataroot_LR": "/content/dataset/unknownCelebA_set2_x4.lmdb",
       "subset_file": null,
       "use_shuffle": true,
       "n_workers": 8,
@@ -31,7 +31,7 @@
   "path": {
     "root": "/content/-ESRGAN",
     // "resume_state": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/training_state/47000.state",
-    // "pretrain_model_G": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/models/47000_G.pth",
+    "pretrain_model_G": "experiments/RRDB_PSNR_x4/models/RRDB_ESRGAN_x4.pth",
     // "pretrain_model_D": "experiments/RRDB_ESRGAN_x4_SRtrainset_2/models/47000_D.pth"
   },
   "network_G": {
