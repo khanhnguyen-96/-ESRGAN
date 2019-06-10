@@ -9,9 +9,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.progress_bar import ProgressBar  # noqa: E402
 
 # configurations
-img_folder = "/content/dataset/unknownCelebA_set2/*"  # glob matching pattern
+img_folder = "/content/dataset/unknownCelebA_set2_x4/*"  # glob matching pattern
 lmdb_save_path = (
-    "/content/dataset/unknownCelebA_set2_HR.lmdb"
+    "/content/dataset/unknownCelebA_set2_x4.lmdb"
 )  # must end with .lmdb
 
 img_list = sorted(glob.glob(img_folder))
