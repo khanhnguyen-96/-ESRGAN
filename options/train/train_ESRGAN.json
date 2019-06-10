@@ -24,8 +24,8 @@
     "val": {
       "name": "PIRM_self_val",
       "mode": "LRHR",
-      "dataroot_HR": "/content/dataset/PIRM_Self-Val_set_HR.lmdb",
-      "dataroot_LR": "/content/dataset/PIRM_Self-Val_set_LR_4x.lmdb"
+      "dataroot_HR": "/content/dataset/unknownCelebA_set10_val_50_HR.lmdb",
+      "dataroot_LR": "/content/dataset/unknownCelebA_set10_val_50_x4.lmdb"
     }
   },
   "path": {
