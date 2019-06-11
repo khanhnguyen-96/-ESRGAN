@@ -1,12 +1,16 @@
 import os.path
-import sys
+
+# import sys
 import math
 import argparse
-import time
+
+# import time
 import random
-import numpy as np
-from collections import OrderedDict
+
+# import numpy as np
+# from collections import OrderedDict
 import logging
+from shutil import copytree
 
 import torch
 
@@ -206,6 +210,11 @@ def main():
                 logger.info("Saving models and training states.")
                 model.save(current_step)
                 model.save_training_state(epoch, current_step)
+                copytree(
+                    opt["path"]["experiments_root"],
+                    "/content/gdrive/My Drive/LVTN/SuperResolution/SR_models/"
+                    + "-ESRGAN/experiments/",
+                )
 
     logger.info("Saving the final model.")
     model.save("latest")
