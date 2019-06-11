@@ -29,7 +29,7 @@
 
   , "path": {
     "root": "/content/-ESRGAN"
-    , "resume_state": "/content/-ESRGAN/experiments/RRDB_ESRGAN_x4_CelebA_set_2/training_state/5000.state"
+    , "resume_state": "/content/-ESRGAN/experiments/RRDB_ESRGAN_x4_CelebA_set_2/training_state/10000.state"
     , "pretrain_model_G": "/content/-ESRGAN/experiments/RRDB_PSNR_x4/models/RRDB_ESRGAN_x4.pth"
   }
 
